@@ -9,5 +9,8 @@ namespace Project.Scripts.ECS.Components
         public SphereCollider playerCollider;
         public Vector3 playerVelocity;
         public float PlayerSpeed;
+        public float PlayerJumpForce;
+        public float Health;
+        public int Coins;
     }
 }

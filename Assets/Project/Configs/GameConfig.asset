@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520bb42d6fb34c39acd8f246e74cbac8, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  PlayerMaxHealth: 100
   PlayerSpeed: 5
+  PlayerJumpHeight: 5
+  DangerousDamageOnHit: 30
   CameraFollowSmoothness: 0.5
+  AudioConfig: {fileID: 11400000, guid: aa41faba4d657e04ca812f8bc7ef7963, type: 2}
+  Levels:
+  - {fileID: 11400000, guid: 587aaa99821d0fe49b3466c3438699f6, type: 2}
+  - {fileID: 11400000, guid: 945926a9a72a95142baf8c51dea60c63, type: 2}
+  - {fileID: 11400000, guid: 67263253c7745e2469fcaf0976b772de, type: 2}
+  - {fileID: 11400000, guid: a9c6962d05e9b8b4c963818121d6744f, type: 2}
+  - {fileID: 11400000, guid: 09ce6da71dbe545419bea3805afdd63a, type: 2}

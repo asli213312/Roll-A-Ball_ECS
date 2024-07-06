@@ -1,5 +1,6 @@
 ﻿using Leopotam.EcsLite;
 using Project.Scripts.ECS.Components;
+using Project.Scripts.ECS.MonoBehaviours;
 using UnityEngine;
 
 namespace Project.Scripts.ECS.Systems
@@ -18,11 +19,15 @@ namespace Project.Scripts.ECS.Systems
             ref var playerComponent = ref playerPool.Get(playerEntity);
             var playerInputPool = ecsWorld.GetPool<PlayerInputComponent>();
             playerInputPool.Add(playerEntity);
-            ref var playerInputComponent = ref playerInputPool.Get(playerEntity);
 
             var playerGO = GameObject.FindGameObjectWithTag("Player");
+            playerGO.GetComponentInChildren<GroundChecker>().groundedPool = ecsSystems.GetWorld().GetPool<GroundedComponent>();
+            playerGO.GetComponentInChildren<GroundChecker>().playerEntity = playerEntity;
+            playerGO.GetComponentInChildren<CollisionChecker>().ecsWorld = ecsWorld;
             playerComponent.PlayerSpeed = gameData.GameConfig.PlayerSpeed;
             playerComponent.playerTransform = playerGO.transform;
+            playerComponent.Health = gameData.GameConfig.PlayerMaxHealth;
+            playerComponent.PlayerJumpForce = gameData.GameConfig.PlayerJumpHeight;
             playerComponent.playerCollider = playerGO.GetComponent<SphereCollider>();
             playerComponent.playerRB = playerGO.GetComponent<Rigidbody>();
         }

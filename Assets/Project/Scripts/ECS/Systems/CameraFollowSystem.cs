@@ -17,7 +17,7 @@ namespace Project.Scripts.ECS.Systems
             var cameraPool = ecsSystems.GetWorld().GetPool<CameraComponent>();
             cameraPool.Add(cameraEntity);
             ref var cameraComponent = ref cameraPool.Get(cameraEntity);
-
+            
             cameraComponent.cameraTransform = Camera.main.transform;
             cameraComponent.cameraSmoothness = gameData.GameConfig.CameraFollowSmoothness;
             cameraComponent.curDirection = Vector3.zero;
@@ -29,26 +29,24 @@ namespace Project.Scripts.ECS.Systems
         public void Run(IEcsSystems ecsSystems)
         {
             var filter = ecsSystems.GetWorld().Filter<PlayerComponent>()
-                .Inc<PlayerInputComponent>()
                 .End();
             
             var playerPool = ecsSystems.GetWorld().GetPool<PlayerComponent>();
             var cameraPool = ecsSystems.GetWorld().GetPool<CameraComponent>();
-            var playerInputPool = ecsSystems.GetWorld().GetPool<PlayerInputComponent>();
 
             ref var cameraComponent = ref cameraPool.Get(_cameraEntity);
 
             foreach(var entity in filter)
             {
                 ref var playerComponent = ref playerPool.Get(entity);
-                ref var playerInputComponent = ref playerInputPool.Get(entity);
 
-                Vector3 currentPosition = cameraComponent.cameraTransform.position;
-                Vector3 targetPoint = playerComponent.playerTransform.position + cameraComponent.offset;
-                
-                cameraComponent.cameraTransform.position = Vector3.SmoothDamp(currentPosition, targetPoint, ref cameraComponent.curDirection, cameraComponent.cameraSmoothness);
+                Vector3 currentPlayerPosition = playerComponent.playerTransform.position;
+                Vector3 currentCameraPosition = cameraComponent.cameraTransform.position;
 
-                cameraComponent.cameraTransform.LookAt(playerComponent.playerTransform.position);
+                Vector3 targetPositionPoint = currentPlayerPosition + cameraComponent.offset;
+
+                cameraComponent.cameraTransform.position = Vector3.SmoothDamp(currentCameraPosition, targetPositionPoint, ref cameraComponent.curDirection, cameraComponent.cameraSmoothness);
+                cameraComponent.cameraTransform.LookAt(currentPlayerPosition);
             }   
         }
     }
